@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode with Sun and Moon</title>
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        :root.dark-mode {
+            --background-color: #1e1e1e;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .theme-toggle .icon {
+            display: none;
+        }
+
+        .theme-toggle .icon.sun {
+            color: #f39c12;
+        }
+
+        .theme-toggle .icon.moon {
+            color: #f1c40f;
+        }
+
+        :root:not(.dark-mode) .theme-toggle .icon.sun {
+            display: block;
+        }
+
+        :root.dark-mode .theme-toggle .icon.moon {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle">
+        <span class="icon sun">&#9728;</span>
+        <span class="icon moon">&#9790;</span>
+    </button>
+
+    <h1>Hello, welcome to dark mode demo!</h1>
+    <p>Click the button to toggle between light and dark modes.</p>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const rootElement = document.documentElement;
+
+        // Load saved theme from localStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            rootElement.classList.add('dark-mode');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            // Toggle the dark mode class
+            rootElement.classList.toggle('dark-mode');
+
+            // Save the current theme to localStorage
+            const theme = rootElement.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+    </script>
+</body>
+</html>
